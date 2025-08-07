@@ -1,154 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Popup Love Message</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cho tui làm quen nha</title>
   <style>
     body {
+      background: black;
       margin: 0;
-      background-color: black;
       overflow: hidden;
+      font-family: sans-serif;
     }
-
-    .popup {
+    .message {
       position: absolute;
       padding: 10px 20px;
-      background-color: #F8C7DA;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      font-weight: bold;
-      font-size: 18px;
+      background: pink;
       color: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px pink;
-      animation: fadeOut 10s ease forwards;
+      border-radius: 20px;
+      box-shadow: 0 0 20px pink;
+      animation: float 8s linear forwards;
+      font-size: 18px;
     }
-
-    @keyframes fadeOut {
-      0% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(0.5); }
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
     }
-
-    .dialog {
-      position: fixed;
+    .click-message {
+      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #F8C7DA;
-      padding: 20px;
-      border-radius: 10px;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      font-size: 24px;
+      padding: 15px 25px;
+      background: pink;
       color: white;
-      text-align: center;
-      box-shadow: 0 0 15px pink;
-      z-index: 1000;
-      max-width: 80%;
-      box-sizing: border-box;
-    }
-
-    /* Media Queries cho màn hình nhỏ */
-    @media screen and (max-width: 600px) {
-      .popup {
-        padding: 8px 12px;
-        font-size: 14px;
-        max-width: 150px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .dialog {
-        padding: 15px;
-        font-size: 18px;
-        max-width: 90%;
-      }
-    }
-
-    @media screen and (max-width: 400px) {
-      .popup {
-        padding: 6px 10px;
-        font-size: 12px;
-        max-width: 120px;
-      }
-
-      .dialog {
-        padding: 10px;
-        font-size: 16px;
-      }
+      border-radius: 15px;
+      box-shadow: 0 0 20px pink;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 999;
     }
   </style>
 </head>
 <body>
-  <div id="startDialog" class="dialog">Click vào màn hình nhaaa!</div>
+  <audio id="audio">
+    <source src="your-music.mp3" type="audio/mpeg">
+    Trình duyệt không hỗ trợ phát nhạc.
+  </audio>
 
-  <audio id="backgroundMusic" src="assets/music.mp3" loop></audio>
+  <div class="click-message" onclick="startLoveRain()">Click vào màn hình nhaaa!</div>
 
-<script>
-  const messages = ["MÃI LÀ BẠN!"];
-  const colors = ["white"];
-  const dialog = document.getElementById("startDialog");
-  const audio = document.getElementById("backgroundMusic");
+  <script>
+    const messages = ["Cho tui làm quen nha"];
 
-  function createPopup() {
-    const popup = document.createElement("div");
-    popup.className = "popup";
-    popup.textContent = messages[Math.floor(Math.random() * messages.length)];
-    popup.style.color = colors[Math.floor(Math.random() * colors.length)];
-
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-
-    // Điều chỉnh giới hạn vị trí để pop-up không tràn ra ngoài
-    const maxWidth = screenWidth - 150; // Giảm kích thước tối đa của pop-up
-    const maxHeight = screenHeight - 50;
-    const x = Math.floor(Math.random() * (maxWidth < 0 ? 0 : maxWidth));
-    const y = Math.floor(Math.random() * (maxHeight < 0 ? 0 : maxHeight));
-
-    popup.style.left = `${x}px`;
-    popup.style.top = `${y}px`;
-
-    document.body.appendChild(popup);
-
-    setTimeout(() => {
-      popup.remove();
-    }, 25000);
-  }
-
-  function startPopups(count) {
-    let created = 0;
-    const interval = setInterval(() => {
-      if (created >= count) {
-        clearInterval(interval);
-        return;
-      }
-      createPopup();
-      created++;
-    }, 30);
-  }
-
-  function enterFullscreen() {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) {
-      elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) {
-      elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) {
-      elem.msRequestFullscreen();
+    function createMessage() {
+      const msg = document.createElement('div');
+      msg.className = 'message';
+      msg.innerText = messages[Math.floor(Math.random() * messages.length)];
+      msg.style.left = Math.random() * 90 + 'vw';
+      msg.style.top = '100vh';
+      document.body.appendChild(msg);
+      setTimeout(() => {
+        msg.remove();
+      }, 8000); // khớp với thời gian hiệu ứng
     }
-  }
 
-  document.addEventListener("click", function startExperience() {
-    dialog.style.display = "none";
-    audio.play().catch(error => {
-      console.log("Lỗi phát nhạc:", error);
-    });
-    enterFullscreen();
-    startPopups(200);
-    document.removeEventListener("click", startExperience);
-  });
-</script>
+    function startLoveRain() {
+      document.querySelector('.click-message').style.display = 'none';
+
+      const audio = document.getElementById("audio");
+      audio.play().catch(() => {
+        alert("Trình duyệt của bạn đang chặn tự động phát nhạc.");
+      });
+
+      const rainInterval = setInterval(createMessage, 300);
+      
+      // Tự dừng hiệu ứng và nhạc sau 60 giây
+      setTimeout(() => {
+        clearInterval(rainInterval);
+        audio.pause();
+        audio.currentTime = 0;
+      }, 60000); // 60 giây
+    }
+  </script>
 </body>
 </html>
