@@ -112,7 +112,7 @@
 
     setTimeout(() => {
       popup.remove();
-    }, 15000);
+    }, 25000);
   }
 
   function startPopups(count) {
@@ -143,6 +143,10 @@
   document.addEventListener("click", function startExperience() {
     dialog.style.display = "none";
     audio.play().catch(error => {
+      // Dừng nhạc sau 25 giây
+setTimeout(() => {
+    audio.pause();
+}, 25000);
       console.log("Lỗi phát nhạc:", error);
     });
     enterFullscreen();
