@@ -105,8 +105,8 @@
     const x = Math.floor(Math.random() * (maxWidth < 0 ? 0 : maxWidth));
     const y = Math.floor(Math.random() * (maxHeight < 0 ? 0 : maxHeight));
 
-    popup.style.left = `${30}px`;
-    popup.style.top = `${30}px`;
+    popup.style.left = `${x}px`;
+    popup.style.top = `${y}px`;
 
     document.body.appendChild(popup);
 
