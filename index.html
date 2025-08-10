@@ -100,7 +100,7 @@
     const screenHeight = window.innerHeight;
 
     // Điều chỉnh giới hạn vị trí để pop-up không tràn ra ngoài
-    const maxWidth = screenWidth - 150; // Giảm kích thước tối đa của pop-up
+    const maxWidth = screenWidth - 100; // Giảm kích thước tối đa của pop-up
     const maxHeight = screenHeight - 50;
     const x = Math.floor(Math.random() * (maxWidth < 0 ? 0 : maxWidth));
     const y = Math.floor(Math.random() * (maxHeight < 0 ? 0 : maxHeight));
@@ -124,7 +124,7 @@
       }
       createPopup();
       created++;
-    }, 40);
+    }, 30);
   }
 
   function enterFullscreen() {
